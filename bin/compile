@@ -22,7 +22,7 @@ nginx_ver=${NGINX_VERSION:-1.5.11.1}
 nginx_file=${NGINX_FILE:-ngx_openresty-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://openresty.org/download/$nginx_file}
 
-prefix=${NGINX_PREFIX:-$buildpack/usr/versions/$nginx_ver}
+prefix=${NGINX_PREFIX:-$(cd $buildpack && pwd)/usr/versions/$nginx_ver}
 
 if test -d $src_dir/pcre-$pcre_ver
 then
@@ -46,7 +46,7 @@ else
     cd $src_dir
     echo    "       First download, may take several minutes"
     echo -n "-----> Installing drizzle $drizzle_ver..."
-    curl -sO $drizzle_url
+    wget $drizzle_url
     tar zxf $drizzle_file
     rm -f $drizzle_file
     echo " done"

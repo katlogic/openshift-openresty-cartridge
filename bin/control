@@ -23,7 +23,7 @@ function start() {
         [ "$?" == "0" ] && wait_for_pid_file $NGINX_PID_FILE
 
     else
-        echo "WARN: Could not find the compiled application versions/$NGINX_VERSION/bin/nginx, will not start"
+        echo "WARN: Could not find the compiled application $NGINX_EXEC, will not start"
     fi
 }
 
@@ -82,7 +82,7 @@ function tidy() {
 
 
 function update() {
-    version=${NGINX_VERSION:-1.5.11}
+    version=${NGINX_VERSION:-1.5.11.1}
 
     echo "Rebuilding Nginx v$version"
     stop

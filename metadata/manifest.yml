@@ -1,7 +1,7 @@
 Name: openresty
-Cartridge-Short-Name: openresty
+Cartridge-Short-Name: NGINX
 Display-Name: openresty
-Version: "1.5.11"
+Version: "1.5.11.1"
 Versions: ["1.5.11.1"]
 Website: https://github.com/lloydzhou/openshift-nginx-cartridge
 Cartridge-Version: 0.0.2
@@ -11,7 +11,7 @@ Categories:
   - nginx
   - web_framework
 Provides:
-  - nginx-1.5.11
+  - nginx-1.5.11.1
   - nginx
   - nginx(version) = 1.5.11.1
 Scaling:
