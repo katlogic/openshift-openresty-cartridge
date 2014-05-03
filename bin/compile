@@ -4,8 +4,9 @@
 
 set -eo pipefail
 
-mkdir -p "$1/out" "$1/src"
+mkdir -p "$1/out" "$1/src" "$1/lib"
 bin_dir=$(cd "$1/out" && pwd)
+lib_dir=$(cd "$1/lib" && pwd)
 src_dir=$(cd "$1/src" && pwd)
 buildpack=$(dirname $(dirname $0))
 
@@ -13,9 +14,13 @@ pcre_ver=${PCRE_VERSION:-8.33}
 pcre_file=${PCRE_FILE:-pcre-$pcre_ver.tar.gz}
 pcre_url=${PCRE_URL:-http://sourceforge.net/projects/pcre/files/pcre/$pcre_ver/$pcre_file}
 
-nginx_ver=${NGINX_VERSION:-1.4.4}
-nginx_file=${NGINX_FILE:-nginx-$nginx_ver.tar.gz}
-nginx_url=${NGINX_URL:-http://nginx.org/download/$nginx_file}
+drizzle_ver=${DRIZZLE_VERSION:-2011.07.21}
+drizzle_file=${DRIZZLE_FILE:-drizzle7-$drizzle_ver.tar.gz}
+drizzle_url=${DRIZZLE_URL:-http://openresty.org/download/$drizzle_file}
+
+nginx_ver=${NGINX_VERSION:-1.5.11.1}
+nginx_file=${NGINX_FILE:-ngx_openresty-$nginx_ver.tar.gz}
+nginx_url=${NGINX_URL:-http://openresty.org/download/$nginx_file}
 
 
 if test -d $src_dir/pcre-$pcre_ver
@@ -32,6 +37,21 @@ else
     echo " done"
 fi
 
+if test -d $src_dir/drizzle7-$drizzle_ver
+then
+    echo "-----> Using drizzle $drizzle_ver"
+else
+    mkdir -p $src_dir/drizzle7-$drizzle_ver
+    cd $src_dir
+    echo    "       First download, may take several minutes"
+    echo -n "-----> Installing drizzle $drizzle_ver..."
+    curl -sO $drizzle_url
+    tar zxf $drizzle_file
+    rm -f $drizzle_file
+    echo " done"
+fi
+
+
 if test -d $src_dir/nginx-$nginx_ver
 then
     echo "-----> Using Nginx $nginx_ver"
@@ -46,9 +66,19 @@ else
     echo " done"
 fi
 
-
-cd $src_dir/nginx-$nginx_ver/
-./configure --with-pcre=$src_dir/pcre-$pcre_ver/ --with-http_ssl_module
-make
-cp -f objs/nginx $bin_dir
+cd $src_dir/drizzle7-$drizzle_ver/
+./configure --without-server --prefix=$buildpack
+make libdrizzle-1.0
+make install-libdrizzle-1.0
 make clean
+
+export PATH=/sbin:$PATH
+export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib:/opt/rh/nodejs010/root/usr/lib64:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib/pkgconfig
+
+cd $src_dir/ngx_openresty-$nginx_ver/
+./configure --prefix=$buildpack --with-pcre=$src_dir/pcre-$pcre_ver/ \
+--with-luajit --with-libdrizzle=$buildpack --with-http_drizzle_module
+make && make install
+make clean
+

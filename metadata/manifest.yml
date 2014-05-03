@@ -1,19 +1,19 @@
-Name: nginx
-Cartridge-Short-Name: NGINX
-Display-Name: Nginx
-Version: "1.4.4"
-Versions: ["1.4.4"]
-Website: https://github.com/gsterjov/openshift-nginx-cart
+Name: openresty
+Cartridge-Short-Name: openresty
+Display-Name: openresty
+Version: "1.5.11"
+Versions: ["1.5.11.1"]
+Website: https://github.com/lloydzhou/openshift-nginx-cartridge
 Cartridge-Version: 0.0.2
-Cartridge-Vendor: gsterjov
+Cartridge-Vendor: lloyd
 Categories:
   - service
   - nginx
   - web_framework
 Provides:
-  - nginx-1.4
+  - nginx-1.5.11
   - nginx
-  - nginx(version) = 1.4.4
+  - nginx(version) = 1.5.11.1
 Scaling:
   Min: 1
   Max: -1
@@ -37,7 +37,7 @@ Subscribes:
     Required: false
 Group-Overrides:
   - components:
-    - nginx-1.4
+    - nginx-1.5.11
     - web_proxy
 Endpoints:
   - Private-IP-Name:   IP
@@ -52,3 +52,4 @@ Endpoints:
         Backend:       ""
         Options:       { health: true }
 Install-Build-Required: false
+Source-Url: https://github.com/lloydzhou/openshift-nginx-cartridge/archive/master.zip
