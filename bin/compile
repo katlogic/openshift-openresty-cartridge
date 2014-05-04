@@ -95,7 +95,7 @@ make install PREFIX=/luajit DESTDIR=$lua_dir
 echo "change the ngx_lua config, to build static bianry file."
 sed -i "s,-lluajit-5.1 -lm,-lluajit-5.1 -lm -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/ngx_lua-$ngx_lua_ver/config
 sed -i "s,-ldrizzle,-ldrizzle -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/drizzle-nginx-module-$ngx_drizzle_ver/config
-rm -f $lua_dir/luajit/*.so*
+rm -f $lua_dir/luajit/lib/*.so*
 
 cd $src_dir/ngx_openresty-$nginx_ver/
 echo "./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver --with-http_drizzle_module --with-ld-opt=-ldl"
