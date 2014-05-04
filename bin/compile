@@ -73,7 +73,12 @@ else
 fi
 
 cd $src_dir/drizzle7-$drizzle_ver/
-./configure --without-server --enable-static
+if test -d $src_dir/drizzle7-$drizzle_ver/Makefile
+then
+    echo "-----> Using old configure."
+else
+    ./configure --without-server --enable-static
+fi
 make libdrizzle-1.0
 find . -name libdrizzle.a  -exec cp {} $lib_dir \;
 export LIBDRIZZLE_INC=$src_dir/drizzle7-$drizzle_ver/libdrizzle-1.0/
