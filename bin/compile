@@ -98,9 +98,8 @@ sed -i "s,-ldrizzle,-ldrizzle -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/dr
 rm -f $lua_dir/luajit/*.so*
 
 cd $src_dir/ngx_openresty-$nginx_ver/
-echo "./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver --with-luajit --with-http_drizzle_module --with-ld-opt=-ldl"
-./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver \
---with-luajit --with-http_drizzle_module --with-ld-opt="-ldl"
+echo "./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver --with-http_drizzle_module --with-ld-opt=-ldl"
+./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver --with-http_drizzle_module --with-ld-opt="-ldl"
 make && make install
 make clean
 
