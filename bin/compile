@@ -58,7 +58,7 @@ else
 fi
 
 
-if test -d $src_dir/ngx_openresty-$nginx_ver
+if test -f $src_dir/ngx_openresty-$nginx_ver
 then
     echo "-----> Using Nginx $nginx_ver"
 else
