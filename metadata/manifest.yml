@@ -43,6 +43,18 @@ Endpoints:
   - Private-IP-Name:   IP
     Private-Port-Name: PORT
     Private-Port:      8080
+    Private-Version-Name: VERSION
+    private-Version:      1.5.11.1
+    Private-Pcre-Version-Name: PCRE_VERSION
+    private-Pcre-Version:      8.33
+    Private-Drizzle-Version-Name: DRIZZLE_VERSION
+    private-Drizzle-Version:      2011.07.21
+    Private-LuaJIT-Version-Name: LUAJIT_VERSION
+    private-LuaJIT-Version:      2.1-20140330
+    Private-Nginx-lua-Version-Name: NGX_LUA_VERSION
+    private-Nginx-lua-Version:      0.9.6
+    Private-Nginx-Drizzle-Version-Name: VERSION
+    private-Nginx-Drizzle-Version:      0.1.7
     Public-Port-Name:  PROXY_PORT
     Mappings:
       - Frontend:      ""

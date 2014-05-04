@@ -11,21 +11,21 @@ src_dir=$(cd "$1/src" && pwd)
 lua_dir=$(cd "$1" && pwd)
 buildpack=$(dirname $(dirname $0))
 
-pcre_ver=${PCRE_VERSION:-8.33}
+pcre_ver=${OPENSHIFT_PCRE_VERSION:-8.33}
 pcre_file=${PCRE_FILE:-pcre-$pcre_ver.tar.gz}
 pcre_url=${PCRE_URL:-http://sourceforge.net/projects/pcre/files/pcre/$pcre_ver/$pcre_file}
 
-drizzle_ver=${DRIZZLE_VERSION:-2011.07.21}
+drizzle_ver=${OPENSHIFT_DRIZZLE_VERSION:-2011.07.21}
 drizzle_file=${DRIZZLE_FILE:-drizzle7-$drizzle_ver.tar.gz}
 drizzle_url=${DRIZZLE_URL:-http://openresty.org/download/$drizzle_file}
 
-nginx_ver=${NGINX_VERSION:-1.5.11.1}
+nginx_ver=${OPENSHIFT_NGINX_VERSION:-1.5.11.1}
 nginx_file=${NGINX_FILE:-ngx_openresty-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://openresty.org/download/$nginx_file}
 
-luajit_ver=${LUAJIT_VERSION:-2.1-20140330}
-ngx_lua_ver=${NGX_LUA_VERSION:-0.9.6}
-ngx_drizzle_ver=${NGX_DRIZZLE_VERSION:-0.1.7}
+luajit_ver=${OPENSHIFT_LUAJIT_VERSION:-2.1-20140330}
+ngx_lua_ver=${OPENSHIFT_NGX_LUA_VERSION:-0.9.6}
+ngx_drizzle_ver=${OPENSHIFT_NGX_DRIZZLE_VERSION:-0.1.7}
 
 prefix=${NGINX_PREFIX:-$(cd $buildpack && pwd)/usr/versions/$nginx_ver}
 

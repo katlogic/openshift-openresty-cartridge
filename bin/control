@@ -87,14 +87,14 @@ function update() {
     echo "Rebuilding Nginx v$version"
     stop
 
-    mkdir -p tmp/build
-    bin/compile tmp/build
+    mkdir -p /tmp/build
+    bin/compile /tmp/build
 
 #    bin_dir="usr/versions/$version/bin"
 #    mkdir -p $bin_dir
 #    cp -f tmp/build/out/nginx $bin_dir
     
-    #rm -rf tmp/build
+    rm -rf /tmp/build
 }
 
 
