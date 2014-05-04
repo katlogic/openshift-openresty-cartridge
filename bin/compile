@@ -24,7 +24,7 @@ nginx_file=${NGINX_FILE:-ngx_openresty-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://openresty.org/download/$nginx_file}
 
 luajit_ver=${LUAJIT_VERSION:-2.1-20140330}
-ngx_lua_ver=${NGX_LUA_VERSION:-0.9.7}
+ngx_lua_ver=${NGX_LUA_VERSION:-0.9.6}
 ngx_drizzle_ver=${NGX_DRIZZLE_VERSION:-0.1.7}
 
 prefix=${NGINX_PREFIX:-$(cd $buildpack && pwd)/usr/versions/$nginx_ver}
