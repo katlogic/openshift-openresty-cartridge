@@ -22,6 +22,9 @@ nginx_ver=${NGINX_VERSION:-1.5.11.1}
 nginx_file=${NGINX_FILE:-ngx_openresty-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://openresty.org/download/$nginx_file}
 
+luajit_ver=${LUAJIT_VERSION:-2.1-20140423}
+ngx_lua_ver=${NGX_LUA_VERSION:-0.9.7}
+
 prefix=${NGINX_PREFIX:-$(cd $buildpack && pwd)/usr/versions/$nginx_ver}
 
 if test -d $src_dir/pcre-$pcre_ver
@@ -77,9 +80,17 @@ export PATH=/sbin:$PATH
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib/pkgconfig
 
+echo "build luajit first."
+mv $src_dir/ngx_openresty-$nginx_ver/bundle/LuaJIT-$luajit_ver $src_dir/LuaJIT-$luajit_ver
+cd $src_dir/LuaJIT-$luajit_ver
+make install PREFIX=/luajit DESTDIR=$1
+
+echo "change the ngx_lua config, to build static bianry file."
+sed -i "s,-lluajit-5.1 -lm,-lluajit-5.1 -lm -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/ngx_lua-$ngx_lua_ver/config
+
 cd $src_dir/ngx_openresty-$nginx_ver/
 ./configure --prefix=$prefix --with-pcre=$src_dir/pcre-$pcre_ver/ \
---with-luajit --with-libdrizzle=$prefix --with-http_drizzle_module
+--with-luajit --with-libdrizzle=$prefix --with-http_drizzle_module --with-ld-opt="-ldl"
 make && make install
 make clean
 
