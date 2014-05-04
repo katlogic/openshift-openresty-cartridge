@@ -9,7 +9,6 @@ bin_dir=$(cd "$1/out" && pwd)
 lib_dir=$(cd "$1/lib" && pwd)
 src_dir=$(cd "$1/src" && pwd)
 lua_dir=$(cd "$1" && pwd)
-drizzle_dir=$(cd "$1" && pwd)
 buildpack=$(dirname $(dirname $0))
 
 pcre_ver=${PCRE_VERSION:-8.33}
@@ -74,16 +73,17 @@ else
 fi
 
 cd $src_dir/drizzle7-$drizzle_ver/
-./configure --without-server --enable-static --prefix=$drizzle_dir
+./configure --without-server --enable-static
 make libdrizzle-1.0
-make install libdrizzle-1.0
+find . -name libdrizzle.a  -exec cp {} $lib_dir \;
+export LIBDRIZZLE_INC=$src_dir/drizzle7-$drizzle_ver/libdrizzle-1.0/
+export LIBDRIZZLE_LIB=$lib_dir
 
+echo "build luajit first."
 export PATH=/sbin:$PATH
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib/pkgconfig
-
-echo "build luajit first."
-mv $src_dir/ngx_openresty-$nginx_ver/bundle/LuaJIT-$luajit_ver $src_dir/LuaJIT-$luajit_ver
+cp -r $src_dir/ngx_openresty-$nginx_ver/bundle/LuaJIT-$luajit_ver $src_dir/LuaJIT-$luajit_ver
 cd $src_dir/LuaJIT-$luajit_ver
 make install PREFIX=/luajit DESTDIR=$lua_dir
 
@@ -91,11 +91,10 @@ echo "change the ngx_lua config, to build static bianry file."
 sed -i "s,-lluajit-5.1 -lm,-lluajit-5.1 -lm -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/ngx_lua-$ngx_lua_ver/config
 sed -i "s,-ldrizzle,-ldrizzle -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/drizzle-nginx-module-$ngx_drizzle_ver/config
 rm -f $lua_dir/luajit/*.so*
-rm -f $drizzle_dir/lib/*.so*
 
 cd $src_dir/ngx_openresty-$nginx_ver/
 ./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver/ \
---with-luajit --with-libdrizzle=$bin_dir --with-http_drizzle_module --with-ld-opt="-ldl"
+--with-luajit --with-http_drizzle_module --with-ld-opt="-ldl"
 make && make install
 make clean
 
