@@ -5,4 +5,13 @@ server {
     location / {
         index  index.html index.htm;
     }
+    
+    location /test-lua {
+        content_by_lua 'ngx.say("hello world!")';
+    }
+    
+    location /test-echo {
+        echo hello;
+        echo world;
+    }
 }
