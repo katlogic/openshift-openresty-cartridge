@@ -2,11 +2,10 @@
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-
-NGINX_EXEC=$OPENSHIFT_NGINX_DIR/usr/versions/$NGINX_VERSION/nginx/sbin/nginx
+NGINX_PREFIX=$OPENSHIFT_NGINX_DIR/usr/versions/$NGINX_VERSION/nginx
+NGINX_EXEC=$NGINX_PREFIX/sbin/nginx
 NGINX_CONFIG_FILE=$OPENSHIFT_NGINX_DIR/conf/nginx.conf
 NGINX_PID_FILE=$OPENSHIFT_NGINX_DIR/run/nginx.pid
-LD_LIBRARY_PATH=$OPENSHIFT_NGINX_DIR/usr/versions/$NGINX_VERSION/luajit/lib:$LD_LIBRARY_PATH
 
 
 function start() {
@@ -19,7 +18,7 @@ function start() {
         fi
 
         # nginx will always use the prefix defined at compile time unless an absolute path to the conf file is given
-        nohup "$NGINX_EXEC" -c "$NGINX_CONFIG_FILE" 2>&1
+        nohup "$NGINX_EXEC" -c "$NGINX_CONFIG_FILE" -p $NGINX_PREFIX 2>&1
         [ "$?" == "0" ] && wait_for_pid_file $NGINX_PID_FILE
 
     else
@@ -33,7 +32,7 @@ function stop() {
 
     if [ -f "$NGINX_PID_FILE" ]; then
         pid=`cat "$NGINX_PID_FILE" 2> /dev/null`
-        eval "'$NGINX_EXEC' -c '$NGINX_CONFIG_FILE' -s stop"
+        eval "'$NGINX_EXEC' -c '$NGINX_CONFIG_FILE' -p '$NGINX_PREFIX' -s stop"
         wait_for_stop $pid
     fi
 }
@@ -66,7 +65,7 @@ function reload() {
     if [ -f "$NGINX_PID_FILE" ]
     then
         pid=`cat "$NGINX_PID_FILE" 2> /dev/null`
-        output=$("$NGINX_EXEC" -c "$NGINX_CONFIG_FILE" -s reload)
+        output=$("$NGINX_EXEC" -c "$NGINX_CONFIG_FILE" -p "$NGINX_PREFIX" -s reload)
         client_result "$output"
     else
         client_result "Cannot reload Nginx as it is not running"
@@ -90,9 +89,8 @@ function update() {
     mkdir -p /tmp/build
     bin/compile /tmp/build
 
-#    bin_dir="usr/versions/$version/bin"
-#    mkdir -p $bin_dir
-#    cp -f tmp/build/out/nginx $bin_dir
+    bin_dir="usr/versions/$version/bin"
+    mkdir -p $bin_dir
     
     rm -rf /tmp/build
 }
