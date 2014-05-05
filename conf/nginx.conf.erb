@@ -29,5 +29,7 @@ http {
 
     keepalive_timeout  65;
 
+    lua_package_path "<%= ENV['OPENSHIFT_NGINX_DIR'] %>/usr/versions/<%= ENV['NGINX_VERSION'] %>/lualib/?.lua;;";
+    lua_package_path "<%= ENV['OPENSHIFT_NGINX_DIR'] %>/usr/versions/<%= ENV['NGINX_VERSION'] %>/lualib/?.so;;";
     include  <%= ENV['OPENSHIFT_REPO_DIR'] %>nginx.conf;
 }
