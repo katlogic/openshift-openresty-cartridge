@@ -7,10 +7,17 @@ server {
     }
     
     location /test-lua {
-        content_by_lua 'ngx.say("hello world!")';
+        content_by_lua '
+            local cjson = require "cjson"
+            ngx.say(cjson.encode({code = 1, message = "hello world!"}))
+        ';
+        header_filter_by_lua '
+            ngx.header.content_type = "text/plain; charset=utf-8";
+        ';
     }
     
     location /test-echo {
+        add_header  Content-Type 'text/plain; charset=utf-8';
         echo hello;
         echo world;
     }
