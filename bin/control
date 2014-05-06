@@ -2,7 +2,7 @@
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-NGINX_PREFIX=$OPENSHIFT_NGINX_DIR/usr/versions/$NGINX_VERSION/nginx
+NGINX_PREFIX=$OPENSHIFT_NGINX_DIR/usr/versions/$OPENSHIFT_NGINX_VERSION/nginx
 NGINX_EXEC=$NGINX_PREFIX/sbin/nginx
 NGINX_CONFIG_FILE=$OPENSHIFT_NGINX_DIR/conf/nginx.conf
 NGINX_PID_FILE=$OPENSHIFT_NGINX_DIR/run/nginx.pid
@@ -81,7 +81,7 @@ function tidy() {
 
 
 function update() {
-    version=${NGINX_VERSION:-1.5.11.1}
+    version=${OPENSHIFT_NGINX_VERSION:-1.5.11.1}
 
     echo "Rebuilding Nginx v$version"
     stop

@@ -1,2 +1,0 @@
-2014/05/04 20:16:24 [emerg] 459444#0: open() "/var/lib/openshift/536694195004462f680002a0/openresty//conf/nginx.conf" failed (2: No such file or directory)
-2014/05/04 20:16:54 [emerg] 460203#0: open() "/var/lib/openshift/536694195004462f680002a0/openresty//conf/nginx.conf" failed (2: No such file or directory)
