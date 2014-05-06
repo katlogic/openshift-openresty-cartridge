@@ -12,12 +12,12 @@ server {
             ngx.say(cjson.encode({code = 1, message = "hello world!"}))
         ';
         header_filter_by_lua '
-            ngx.header.content_type = "text/plain; charset=utf-8";
+            ngx.header.content_type = "application/json; charset=utf-8";
         ';
     }
     
     location /test-echo {
-        add_header  Content-Type 'text/plain; charset=utf-8';
+        default_type  text/plain;
         echo hello;
         echo world;
     }
