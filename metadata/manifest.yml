@@ -1,9 +1,9 @@
 Name: openresty
 Cartridge-Short-Name: NGINX
 Display-Name: openresty
-Version: "1.5.11.1"
-Versions: ["1.5.11.1"]
-Website: https://github.com/lloydzhou/openshift-nginx-cartridge
+Version: "1.9.7.1"
+Versions: ["1.9.7.1"]
+Website: https://github.com/pagedangan/openshift-nginx-cartridge
 Cartridge-Version: 0.0.2
 Cartridge-Vendor: lloyd
 Categories:
@@ -11,9 +11,9 @@ Categories:
   - nginx
   - web_framework
 Provides:
-  - nginx-1.5.11.1
+  - nginx-1.9.7.1
   - nginx
-  - nginx(version) = 1.5.11.1
+  - nginx(version) = 1.9.7.1
 Scaling:
   Min: 1
   Max: -1
@@ -37,14 +37,14 @@ Subscribes:
     Required: false
 Group-Overrides:
   - components:
-    - nginx-1.5.11
+    - nginx-1.9.7.1
     - web_proxy
 Endpoints:
   - Private-IP-Name:   IP
     Private-Port-Name: PORT
     Private-Port:      8080
     Private-Version-Name: VERSION
-    private-Version:      1.5.11.1
+    private-Version:      1.9.7.1
     Private-Pcre-Version-Name: PCRE_VERSION
     private-Pcre-Version:      8.33
     Private-Drizzle-Version-Name: DRIZZLE_VERSION
@@ -60,8 +60,8 @@ Endpoints:
       - Frontend:      ""
         Backend:       ""
         Options:       { websocket: true }
-      - Frontend:      "/health"
+      - Frontend:      "/cek/health"
         Backend:       ""
         Options:       { health: true }
 Install-Build-Required: false
-Source-Url: https://github.com/lloydzhou/openshift-nginx-cartridge/archive/master.zip
+Source-Url: https://github.com/pagedangan/openshift-nginx-cartridge/archive/master.zip
