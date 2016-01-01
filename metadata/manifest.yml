@@ -50,7 +50,7 @@ Endpoints:
     Private-Drizzle-Version-Name: DRIZZLE_VERSION
     private-Drizzle-Version:      2011.07.21
     Private-LuaJIT-Version-Name: LUAJIT_VERSION
-    private-LuaJIT-Version:      2.1-20140330
+    private-LuaJIT-Version:      2.1-20151219
     Private-Nginx-lua-Version-Name: NGX_LUA_VERSION
     private-Nginx-lua-Version:      0.9.6
     Private-Nginx-Drizzle-Version-Name: VERSION
