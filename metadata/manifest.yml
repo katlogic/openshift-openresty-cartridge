@@ -3,7 +3,7 @@ Cartridge-Short-Name: NGINX
 Display-Name: openresty
 Version: "1.9.7.1"
 Versions: ["1.9.7.1"]
-Website: https://github.com/pagedangan/openshift-nginx-cartridge
+Website: https://github.com/pagedangan/openshift-openrsty-cartridge
 Cartridge-Version: 0.0.2
 Cartridge-Vendor: lloyd
 Categories:
