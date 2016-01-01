@@ -23,7 +23,7 @@ nginx_ver=${OPENSHIFT_NGINX_VERSION:-1.9.7.1}
 nginx_file=${NGINX_FILE:-ngx_openresty-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://openresty.org/download/$nginx_file}
 
-luajit_ver=${OPENSHIFT_LUAJIT_VERSION:-2.1-20140330}
+luajit_ver=${OPENSHIFT_LUAJIT_VERSION:-2.1-20151219}
 ngx_lua_ver=${OPENSHIFT_NGX_LUA_VERSION:-0.9.6}
 ngx_drizzle_ver=${OPENSHIFT_NGX_DRIZZLE_VERSION:-0.1.7}
 
