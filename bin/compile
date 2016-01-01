@@ -24,7 +24,7 @@ nginx_file=${NGINX_FILE:-ngx_openresty-$nginx_ver.tar.gz}
 nginx_url=${NGINX_URL:-http://openresty.org/download/$nginx_file}
 
 luajit_ver=${OPENSHIFT_LUAJIT_VERSION:-2.1-20151219}
-ngx_lua_ver=${OPENSHIFT_NGX_LUA_VERSION:-0.9.6}
+ngx_lua_ver=${OPENSHIFT_NGX_LUA_VERSION:-0.9.20}
 ngx_drizzle_ver=${OPENSHIFT_NGX_DRIZZLE_VERSION:-0.1.7}
 
 prefix=${NGINX_PREFIX:-$(cd $buildpack && pwd)/usr/versions/$nginx_ver}
@@ -88,18 +88,21 @@ echo "build luajit first."
 export PATH=/sbin:$PATH
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$OPENSHIFT_DATA_DIR/usr/local/lib/pkgconfig
-cp -r $src_dir/ngx_openresty-$nginx_ver/bundle/LuaJIT-$luajit_ver $src_dir/LuaJIT-$luajit_ver
-cd $src_dir/LuaJIT-$luajit_ver
+cp -r $src_dir/ngx_openresty-$nginx_ver/bundle/LuaJIT-2.1-20151219 $src_dir/LuaJIT-2.1-20151219
+cd $src_dir/LuaJIT-2.1-20151219
 make install PREFIX=/luajit DESTDIR=$lua_dir
 
 echo "change the ngx_lua config, to build static bianry file."
-sed -i "s,-lluajit-5.1 -lm,-lluajit-5.1 -lm -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/ngx_lua-$ngx_lua_ver/config
-sed -i "s,-ldrizzle,-ldrizzle -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/drizzle-nginx-module-$ngx_drizzle_ver/config
+sed -i "s,-lluajit-5.1 -lm,-lluajit-5.1 -lm -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/ngx_lua-0.9.20/config
+sed -i "s,-ldrizzle,-ldrizzle -ldl," $src_dir/ngx_openresty-$nginx_ver/bundle/drizzle-nginx-module-0.1.9/config
 rm -f $lua_dir/luajit/lib/*.so*
+
+cd $src_dir
+wget https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng/get/c78b7dd79d0d.zip
+unzip c78b7dd79d0d.zip
 
 cd $src_dir/ngx_openresty-$nginx_ver/
 echo "./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver --with-http_drizzle_module --with-ld-opt=-ldl"
-./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver --with-http_drizzle_module --with-ld-opt="-ldl"
+./configure --prefix=$prefix --with-luajit=$lua_dir/luajit --with-pcre=$src_dir/pcre-$pcre_ver --with-http_drizzle_module --with-ld-opt="-ldl" --add-module=$src_dir/nginx-goodies-nginx-sticky-module-ng-c78b7dd79d0d
 make && make install
 make clean
-
