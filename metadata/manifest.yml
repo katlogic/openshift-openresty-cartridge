@@ -64,4 +64,4 @@ Endpoints:
         Backend:       ""
         Options:       { health: true }
 Install-Build-Required: false
-Source-Url: https://github.com/pagedangan/openshift-nginx-cartridge/archive/master.zip
+Source-Url: https://github.com/pagedangan/openshift-openresty-cartridge/archive/master.zip
