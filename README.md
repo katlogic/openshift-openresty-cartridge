@@ -1,7 +1,6 @@
-## Openshift Nginx Cartridge
+## Openshift Nginx/OpenResty Cartridge
 
-A cartridge for openshift that enables Nginx to be used as the web server.
-
+A cartridge for openshift that enables Nginx/LuaJIT to be used as the web server.
 
 ### Installation
 
@@ -9,10 +8,9 @@ To install this cartridge:
 
 	rhc create-app myapp https://raw.githubusercontent.com/katlogic/openshift-openresty-cartridge/master/metadata/manifest.yml
 
-
 ### Configuration
 
-The cartridge installs two main config files. One at <code>$OPENSHIFT_NGINX_DIR/conf/nginx.conf</code> which gets loaded by the executable and sets up specific app configuration such as logs and pid files. It's template <code>$OPENSHIFT_NGINX_DIR/conf/nginx.conf.erb</code> is meant to be modified only in the cartridge repo.
+The cartridge installs two main config files. One at <code>$OPENSHIFT_NGINX_DIR/conf/nginx.conf</code> which gets loaded by the executable and sets up specific app configuration such as logs and pid files. Its template <code>$OPENSHIFT_NGINX_DIR/conf/nginx.conf.erb</code> is meant to be modified only in the cartridge repo.
 
 The above config then includes another nginx.conf which must exist at <code>$OPENSHIFT_REPO_DIR/nginx.conf</code>. This config should contain all your server specific set up including which ip/port to listen on.
 
