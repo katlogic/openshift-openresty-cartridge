@@ -6,7 +6,7 @@ A cartridge for openshift that enables Nginx/LuaJIT to be used as the web server
 
 To install this cartridge:
 
-`rhc create-app myapp https://raw.githubusercontent.com/katlogic/openshift-openresty-cartridge/master/metadata/manifest.yml`
+    rhc create-app myapp https://raw.githubusercontent.com/katlogic/openshift-openresty-cartridge/master/metadata/manifest.yml
 
 ### Configuration
 
