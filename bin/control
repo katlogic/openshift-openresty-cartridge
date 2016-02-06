@@ -17,6 +17,12 @@ function start() {
             oo-erb $OPENSHIFT_REPO_DIR/nginx.conf.erb > $OPENSHIFT_REPO_DIR/nginx.conf
         fi
 
+	for appcf in $OPENSHIFT_REPO_DIR/apps/*.conf.erb; do
+	    if [ -f "$appcf" ]; then
+	      oo-erb "$appcf" > "${appcf%.erb}"
+	    fi
+	done
+
         # nginx will always use the prefix defined at compile time unless an absolute path to the conf file is given
         nohup "$NGINX_EXEC" -c "$NGINX_CONFIG_FILE" -p "$OPENSHIFT_NGINX_DIR" 2>&1
         [ "$?" == "0" ] && wait_for_pid_file $NGINX_PID_FILE
