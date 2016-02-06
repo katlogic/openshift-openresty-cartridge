@@ -7,7 +7,7 @@ A cartridge for openshift that enables Nginx to be used as the web server.
 
 To install this cartridge use the cartridge reflector when creating an app
 
-	rhc create-app myapp https://raw.githubusercontent.com/katlogic/openshift-openrsty-cartridge/master/metadata/manifest.yml
+	rhc create-app myapp https://raw.githubusercontent.com/katlogic/openshift-openresty-cartridge/master/metadata/manifest.yml
 
 
 ### Configuration
